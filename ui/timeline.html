@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Sous — dinner timeline</title>
+</head>
+<body>
+  <main id="app" class="app is-empty">
+    <header class="top">
+      <div class="serve">
+        <span class="eyebrow">Dinner at</span>
+        <strong id="serveTime" class="serve-time">—</strong>
+        <span id="countdown" class="countdown"></span>
+      </div>
+      <ul id="dishes" class="dishes" aria-label="Dishes"></ul>
+    </header>
+
+    <section class="now" aria-live="polite">
+      <div class="now-head">
+        <span id="nowLabel" class="eyebrow">Right now</span>
+        <span id="nowDish" class="now-dish"></span>
+      </div>
+      <h1 id="nowTitle" class="now-title">Tell Alexa what you're cooking</h1>
+      <p id="nowMeta" class="now-meta">For example: "Alexa, I'm making salmon, rice and broccoli for 7."</p>
+      <div class="actions">
+        <button id="doneBtn" class="btn btn-primary" type="button" hidden>Done</button>
+        <button id="lateBtn" class="btn btn-quiet" type="button" hidden>I'm 5 min behind</button>
+      </div>
+    </section>
+
+    <aside class="side">
+      <section class="panel">
+        <h2 class="eyebrow">Timers</h2>
+        <ul id="timers" class="timers"><li class="muted">No timers running</li></ul>
+      </section>
+      <section class="panel">
+        <h2 class="eyebrow">Up next</h2>
+        <ol id="upnext" class="upnext"><li class="muted">Nothing planned yet</li></ol>
+      </section>
+    </aside>
+
+    <section class="lanes" aria-label="Timeline">
+      <div id="lanes"></div>
+      <div id="axis" class="axis"></div>
+    </section>
+
+    <p id="note" class="note" role="status"></p>
+  </main>
+  <script type="module" src="./src/timeline.ts"></script>
+</body>
+</html>
