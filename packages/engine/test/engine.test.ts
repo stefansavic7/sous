@@ -259,6 +259,9 @@ test("parseServeTime understands everyday phrasing and time zones", () => {
   assert.equal(parseServeTime("in an hour", noon, tz), noon + 3600000);
   assert.equal(parseServeTime("in 40 minutes", noon + 20000, tz), noon + 41 * 60000, "rounds up to a whole minute");
   assert.equal(parseServeTime("9am", noon, tz), Date.UTC(2026, 9, 2, 7, 0), "past times roll to tomorrow");
+  const evening = Date.UTC(2026, 9, 1, 19, 0); // 21:00 in Sarajevo
+  assert.equal(parseServeTime("7", evening, tz), Date.UTC(2026, 9, 2, 17, 0), "no am/pm, both passed → tomorrow evening");
+  assert.equal(parseServeTime("7am", evening, tz), Date.UTC(2026, 9, 2, 5, 0));
   assert.equal(parseServeTime("banana", noon, tz), null);
   assert.equal(parseServeTime("6:30 pm", noon, "America/New_York"), Date.UTC(2026, 9, 1, 22, 30));
 });
