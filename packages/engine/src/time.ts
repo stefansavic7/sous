@@ -68,11 +68,12 @@ export function parseServeTime(text: string, now: number, timeZone = "UTC"): num
   }
   if (hour === null || hour > 23 || minute > 59) return null;
   // "7" or "7:30" without am/pm: the next time the clock shows it (dinner at 5 pm → 7:30 pm).
+  // If both have passed today ("7" at 9 pm), it's tomorrow evening: Sous plans dinners.
   const candidates = [hour];
   if (!meridiem && hour >= 1 && hour <= 11) candidates.push(hour + 12);
   for (const h of candidates) {
     const at = wallClock(timeZone, now, h, minute);
     if (at > now) return at;
   }
-  return wallClock(timeZone, now + 86400000, candidates[0], minute);
+  return wallClock(timeZone, now + 86400000, candidates[candidates.length - 1], minute);
 }
