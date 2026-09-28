@@ -7,6 +7,7 @@
 > "Dinner is at 7:00. Start now: preheat the oven to 400°F. It's about 14 minutes of hands-on work. To share the oven, the broccoli roasts at 400°F for 24 minutes instead of 425°F for 20."
 
 - **Try it in your browser:** https://stefansavic7.github.io/sous/ (simulated Alexa+, real MCP server running in the page)
+- **Demo video (2:30):** https://youtu.be/4mrRpbj5o9U
 - **Hackathon track:** Alexa+ (self-hosted MCP server over Streamable HTTP, MCP spec 2025-11-25) · Open Source mini challenge
 - **License:** MIT
 
