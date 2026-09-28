@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sous video cards</title>
+<style>
+  :root { --bg:#0f1612; --panel:#17211b; --line:#2a3a31; --ink:#eef3ee; --muted:#9db0a4; --saffron:#f3c969; --herb:#8fcf9f; --ember:#ff8a5b; --cue:#2fd0f5; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family: Inter, system-ui, sans-serif; }
+  .card { width:1920px; height:1080px; display:none; position:relative; overflow:hidden; padding:120px 140px; }
+  .card.on { display:flex; }
+  .glow { position:absolute; inset:auto -200px -300px auto; width:900px; height:900px; border-radius:50%; background: radial-gradient(circle, rgba(243,201,105,.10), transparent 65%); }
+  /* title */
+  #title { flex-direction:column; justify-content:center; gap:28px; }
+  .mark { display:flex; align-items:center; gap:36px; }
+  .mark svg { width:150px; height:150px; }
+  .mark h1 { margin:0; font-size:190px; font-weight:800; letter-spacing:-.04em; line-height:1; }
+  .tag { font-size:64px; font-weight:700; letter-spacing:-.01em; margin:0; }
+  .sub { font-size:34px; color:var(--muted); margin:0; }
+  .foot { position:absolute; left:140px; bottom:90px; font-size:24px; color:var(--muted); letter-spacing:.02em; }
+  /* problem */
+  #problem { flex-direction:column; justify-content:center; gap:40px; }
+  #problem h2 { margin:0; font-size:118px; font-weight:800; letter-spacing:-.03em; line-height:1.02; }
+  #problem h2 span { color:var(--saffron); }
+  #problem p { margin:0; font-size:46px; color:var(--muted); max-width:1400px; line-height:1.3; }
+  #problem p b { color:var(--ink); }
+  /* how */
+  #how { flex-direction:column; gap:44px; padding-top:90px; }
+  #how h2 { margin:0; font-size:64px; font-weight:800; letter-spacing:-.02em; }
+  .cols { display:grid; grid-template-columns: 1fr 1fr; gap:48px; }
+  .box { background:var(--panel); border:1px solid var(--line); border-radius:22px; padding:30px 34px; }
+  .box h3 { margin:0 0 14px; font-size:22px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  .box ul { margin:0; padding:0; list-style:none; display:grid; gap:12px; font-size:30px; }
+  .box li::before { content:""; display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--saffron); margin-right:16px; transform:translateY(-4px); }
+  .box.engine li::before { background:var(--herb); }
+  /* end */
+  #end { flex-direction:column; justify-content:center; gap:34px; }
+  #end h2 { margin:0; font-size:92px; font-weight:800; letter-spacing:-.03em; }
+  .links { display:grid; gap:20px; font-size:40px; }
+  .links span { color:var(--muted); display:inline-block; width:330px; }
+  .links b { color:var(--saffron); font-weight:700; }
+  .credit { font-size:30px; color:var(--muted); margin-top:30px; }
+</style>
+</head>
+<body>
+<section class="card" id="title">
+  <div class="glow"></div>
+  <div class="mark">
+    <svg viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#1f2a24"/><circle cx="32" cy="34" r="17" fill="none" stroke="#f3c969" stroke-width="4"/><path d="M32 34V23M32 34l8 5" stroke="#f3c969" stroke-width="4" stroke-linecap="round"/><path d="M18 12h28" stroke="#9ad1a8" stroke-width="4" stroke-linecap="round"/></svg>
+    <h1>Sous</h1>
+  </div>
+  <p class="tag">Every dish ready at the same time.</p>
+  <p class="sub">An Alexa+ agent skill: a self-hosted MCP server with an Echo Show view.</p>
+  <div class="foot">Build, Ship, Shape: Amazon Developer Hackathon · Alexa+ track</div>
+</section>
+
+<section class="card" id="problem">
+  <div class="glow"></div>
+  <h2>Three dishes.<br>One cook. <span>One oven.</span></h2>
+  <p>Timers tell you when something is done. They don't tell you <b>when to start each dish</b> so everything reaches the table together.</p>
+</section>
+
+<section class="card" id="how">
+  <h2>How it works</h2>
+  <svg viewBox="0 0 1640 250" width="1640" height="250" role="img" aria-label="Architecture">
+    <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9db0a4"/></marker></defs>
+    <g font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#eef3ee">
+      <rect x="0" y="80" width="200" height="90" rx="18" fill="#17211b" stroke="#2a3a31" stroke-width="2"/><text x="100" y="135" text-anchor="middle">Cook</text>
+      <rect x="310" y="80" width="230" height="90" rx="18" fill="#17211b" stroke="#2fd0f5" stroke-width="2"/><text x="425" y="135" text-anchor="middle">Alexa+</text>
+      <rect x="760" y="80" width="330" height="90" rx="18" fill="#17211b" stroke="#f3c969" stroke-width="3"/><text x="925" y="135" text-anchor="middle">Sous MCP server</text>
+      <rect x="1300" y="10" width="340" height="90" rx="18" fill="#17211b" stroke="#8fcf9f" stroke-width="2"/><text x="1470" y="65" text-anchor="middle">Scheduling engine</text>
+      <rect x="1300" y="150" width="340" height="90" rx="18" fill="#17211b" stroke="#ff8a5b" stroke-width="2"/><text x="1470" y="205" text-anchor="middle">Echo Show view</text>
+    </g>
+    <g stroke="#9db0a4" stroke-width="3" fill="none" marker-end="url(#a)">
+      <path d="M200 125H300"/><path d="M540 115H750"/><path d="M760 140H550"/><path d="M1090 110L1290 60"/><path d="M1090 145L1290 190"/>
+    </g>
+    <g font-family="Inter, sans-serif" font-size="20" fill="#9db0a4" text-anchor="middle">
+      <text x="250" y="110">voice</text>
+      <text x="645" y="100">MCP 2025-11-25</text>
+      <text x="645" y="172">Streamable HTTP</text>
+      <text x="1195" y="222">MCP Apps</text>
+    </g>
+  </svg>
+  <div class="cols">
+    <div class="box"><h3>MCP features</h3><ul>
+      <li>Tools with structured output and icons</li>
+      <li>Elicitation: "What time would you like to eat?"</li>
+      <li>Sampling for dishes it doesn't know</li>
+      <li>MCP Apps view with on-screen tool calls</li>
+      <li>Resource templates, prompts, bearer auth</li>
+    </ul></div>
+    <div class="box engine"><h3>Scheduling engine (open source)</h3><ul>
+      <li>Plans backwards from dinner time</li>
+      <li>One hands-on step per cook</li>
+      <li>Burners, oven racks and temperatures</li>
+      <li>Shares the oven, keeps baking exact</li>
+      <li>Re-plans when you fall behind</li>
+    </ul></div>
+  </div>
+</section>
+
+<section class="card" id="end">
+  <div class="glow"></div>
+  <h2>Try it in your browser</h2>
+  <div class="links">
+    <div><span>Simulator</span><b>stefansavic7.github.io/sous</b></div>
+    <div><span>Code (MIT)</span><b>github.com/stefansavic7/sous</b></div>
+    <div><span>Engine (MIT)</span><b>github.com/stefansavic7/sous-engine</b></div>
+  </div>
+  <p class="credit">Built by Stefan Savić with Claude (Anthropic) as the AI coding agent.</p>
+</section>
+<script>
+  const id = location.hash.slice(1) || "title";
+  document.getElementById(id).classList.add("on");
+</script>
+</body>
+</html>
