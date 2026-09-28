@@ -21,15 +21,22 @@ function minutes(n: number): string {
   return m ? `${hs} ${m} minutes` : hs;
 }
 
+/** "tomorrow " when `at` falls on the day after `now` in `timeZone`, otherwise "". */
+function tomorrow(at: number, now: number, timeZone: string): string {
+  const day = (t: number) => new Intl.DateTimeFormat("en-CA", { timeZone, year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(t));
+  return day(at) !== day(now) && day(at) === day(now + 86400000) ? "tomorrow " : "";
+}
+
 /** Spoken plan summary: when dinner is, when to start, and anything to know. */
 export function planSpeech(plan: Plan, timeZone: string, now: number): string {
   const names = plan.dishes.map((d) => d.name.toLowerCase());
   const first = plan.steps.find((s) => s.status !== "done");
   const parts: string[] = [];
-  parts.push(`Dinner is at ${clock(plan, 0, timeZone)}: ${listJoin(names)}.`);
+  parts.push(`Dinner is ${tomorrow(plan.serveAt, now, timeZone)}at ${clock(plan, 0, timeZone)}: ${listJoin(names)}.`);
   if (first) {
-    const startsIn = Math.round((plan.serveAt + first.start * 60000 - now) / 60000);
-    const when = startsIn <= 1 ? "Start now" : `Start at ${clock(plan, first.start, timeZone)}`;
+    const startAt = plan.serveAt + first.start * 60000;
+    const startsIn = Math.round((startAt - now) / 60000);
+    const when = startsIn <= 1 ? "Start now" : `Start ${tomorrow(startAt, now, timeZone)}at ${clock(plan, first.start, timeZone)}`;
     parts.push(`${when} — ${mid(first.label)}.`);
   }
   parts.push(`It's about ${minutes(plan.activeMinutes)} of hands-on work.`);
