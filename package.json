@@ -1,0 +1,40 @@
+{
+  "name": "sous-alexa",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Sous: an Alexa+ agent skill (MCP server) that times a whole dinner so every dish is ready at once.",
+  "license": "MIT",
+  "workspaces": [
+    "packages/engine"
+  ],
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "test": "node --test packages/engine/test/*.test.ts server/test/*.test.ts",
+    "build": "node scripts/build.mjs",
+    "start": "node server/dist/main.js",
+    "dev": "node --watch server/src/main.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "^2.1.0",
+    "@modelcontextprotocol/express": "^2.0.1",
+    "@modelcontextprotocol/ext-apps": "^2.0.3",
+    "@modelcontextprotocol/node": "^2.1.0",
+    "@modelcontextprotocol/server": "^2.1.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@fontsource/inter": "^5.3.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.20.4",
+    "esbuild": "^0.28.2",
+    "typescript": "5.9",
+    "vite": "^6.4.3",
+    "vite-plugin-singlefile": "^2.3.3"
+  }
+}
