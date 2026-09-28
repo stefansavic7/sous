@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="Try Sous, an Alexa+ agent skill that times a whole dinner so every dish is ready at once. Simulated Alexa+, real MCP.">
+  <title>Sous · Alexa+ simulator</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f2a24'/%3E%3Ccircle cx='32' cy='34' r='17' fill='none' stroke='%23f3c969' stroke-width='4'/%3E%3Cpath d='M32 34V23M32 34l8 5' stroke='%23f3c969' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M18 12h28' stroke='%239ad1a8' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="bar">
+    <div class="brand">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#1f2a24"/><circle cx="32" cy="34" r="17" fill="none" stroke="#f3c969" stroke-width="4"/><path d="M32 34V23M32 34l8 5" stroke="#f3c969" stroke-width="4" stroke-linecap="round"/><path d="M18 12h28" stroke="#9ad1a8" stroke-width="4" stroke-linecap="round"/></svg>
+      <div><strong>Sous</strong><span>dinner timing for Alexa+ · simulator</span></div>
+    </div>
+    <div class="controls">
+      <label class="field">Server
+        <select id="serverMode">
+          <option value="local">Runs in this page</option>
+          <option value="remote">Self-hosted (Streamable HTTP)</option>
+        </select>
+      </label>
+      <input id="serverUrl" class="field-input" placeholder="http://localhost:3001/mcp" hidden>
+      <input id="serverToken" class="field-input" placeholder="Bearer token (optional)" hidden>
+      <button id="connectBtn" class="small" type="button" hidden>Connect</button>
+      <div id="warp" class="warp" role="group" aria-label="Demo clock">
+        <span class="clock" id="clockLabel">--:--</span>
+        <button type="button" data-rate="1" aria-pressed="true">1×</button>
+        <button type="button" data-rate="10" aria-pressed="false">10×</button>
+        <button type="button" data-rate="60" aria-pressed="false">60×</button>
+        <button type="button" data-jump="10" title="Skip ahead 10 minutes">+10 min</button>
+      </div>
+      <label class="toggle"><input type="checkbox" id="voice" checked> Voice</label>
+    </div>
+  </header>
+
+  <main class="stage">
+    <section class="device-col" aria-label="Simulated smart display">
+      <div class="display">
+        <div class="screen" id="screen">
+          <div class="idle" id="idle">
+            <p class="idle-time" id="idleTime"></p>
+            <p class="idle-hint">"Alexa, I'm making salmon, rice and broccoli for 7."</p>
+          </div>
+        </div>
+        <div class="lightbar" id="lightbar" aria-hidden="true"></div>
+      </div>
+      <p class="caption" id="caption" aria-live="polite"></p>
+      <p class="status" id="connStatus">Starting…</p>
+    </section>
+
+    <section class="talk" aria-label="Conversation">
+      <ol class="transcript" id="transcript"></ol>
+      <div class="chips" id="chips">
+        <button type="button" data-say="I'm making salmon, rice and broccoli for 7">Salmon, rice &amp; broccoli for 7</button>
+        <button type="button" data-say="We're having roast chicken, crispy roast potatoes and garlic bread in 90 minutes">Roast chicken in 90 min</button>
+        <button type="button" data-say="Plan dinner: steak, mashed potatoes and green beans">Steak dinner, no time</button>
+        <button type="button" data-say="What's next?">What's next?</button>
+        <button type="button" data-say="Done">Done</button>
+        <button type="button" data-say="I'm running 10 minutes late">10 min late</button>
+        <button type="button" data-say="Add a recipe">Add a recipe</button>
+      </div>
+      <form class="say" id="sayForm" autocomplete="off">
+        <button type="button" id="mic" class="mic" aria-label="Speak">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <input id="sayInput" type="text" placeholder="Talk to Alexa…" aria-label="Talk to Alexa">
+        <button class="send" type="submit">Say</button>
+      </form>
+      <details class="traffic">
+        <summary>MCP traffic <span class="count" id="trafficCount">0</span></summary>
+        <ol id="traffic"></ol>
+      </details>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p><strong>What's simulated:</strong> Alexa+ itself. A small rule-based router stands in for Alexa+'s language model so this page runs without accounts or keys.
+    <strong>What's real:</strong> the Sous MCP server (spec 2025-11-25), its tools, elicitation, and the Echo Show view built with MCP Apps.</p>
+  </footer>
+
+  <dialog id="recipeDialog" class="dialog">
+    <form id="recipeForm" method="dialog">
+      <h2>Teach Sous a recipe</h2>
+      <label>Dish name <input id="recipeName" placeholder="Grandma's stuffed peppers"></label>
+      <label>Method
+        <textarea id="recipeText" rows="8" placeholder="Preheat the oven to 375°F.&#10;Stuff the peppers with rice and beef.&#10;Bake for 45 minutes."></textarea>
+      </label>
+      <div class="row">
+        <button value="cancel" class="small ghost">Cancel</button>
+        <button value="save" class="small">Save recipe</button>
+      </div>
+    </form>
+  </dialog>
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>
